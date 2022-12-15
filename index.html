@@ -1,10 +1,49 @@
-<!DOCTYPE html>
 <html>
-<head>
-  <title>My HTML Page</title>
-</head>
-<body>
-  <h1>Welcome to my HTML page</h1>
-  <p>This is a simple page created using HTML</p>
-</body>
-</html>
+  <head>
+    <style>
+      /* Define some styles for the portfolio items */
+      .portfolio-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .portfolio-item img {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        margin-right: 16px;
+      }
+      .portfolio-item h3 {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Portfolio</h1>
+    
+    <!-- Define a container for the portfolio items -->
+    <div id="portfolio-items"></div>
+    
+    <!-- Load jQuery and the custom script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      // Define a function to fetch the portfolio items from the server
+      function fetchPortfolioItems() {
+        // Make a GET request to the server
+        $.get("/portfolio-items", function(data) {
+          // Loop through each item in the response
+          for (const item of data) {
+            // Create a new portfolio item element
+            const el = document.createElement("div");
+            el.className = "portfolio-item";
+            
+            // Set the item's image, title, and description
+            el.innerHTML = `
+              <img src="${item.imageUrl}" />
+              <h3>${item.title}</h3>
+              <p>${item.description}</p>
+            `;
+            
+            // Add the portfolio item to the page
+            document.getElementById("portfolio-items").appendChild(el);
+
